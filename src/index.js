@@ -5,16 +5,16 @@ import pizzaData from "./data";
 
 
 function Pizza(props) {
-    if (props.pizzaObj.soldOut) return null;
+    // if (props.pizzaObj.soldOut) return null;
     return (
-        <div className='pizza'>
+        <div className={props.pizzaObj.soldOut ? 'pizza sold-out' : 'pizza'}  >
             <img src={props.pizzaObj.photoName} alt="spinaci.jpg" />
             <li>
                 <h3>{props.pizzaObj.name}</h3>
                 <p>{props.pizzaObj.ingredients}</p>
-                <span>{props.pizzaObj.price}</span>
+                <span>{props.pizzaObj.soldOut ? 'SOLD OUT' : props.pizzaObj.price}</span>
             </li>
-        </div>);
+        </div >);
 }
 
 function Header() {
@@ -37,14 +37,21 @@ function Menu() {
 
             {
                 numPizzas > 0 ? (
-                    <ul className='pizzas'>
-                        {/*`{pizzaData.map((pizza) => (<Pizza pizzaObj={pizza} />))}` is mapping over the
+                    /* The `<>` is a shorthand syntax for a React fragment. It allows you to group
+                    multiple elements together without adding an extra DOM element. In this case, it
+                    is used to wrap the `<p>` and `<ul>` elements inside the `Menu` component. */
+                    <React.Fragment>
+                        <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
+                        <ul className='pizzas'>
+
+                            {/*`{pizzaData.map((pizza) => (<Pizza pizzaObj={pizza} />))}` is mapping over the
                 `pizzaData` array and creating a new `Pizza` component for each item in the array.
                 It is passing each pizza object as a prop called `pizzaObj` to the `Pizza`
                 component. This allows the `Pizza` component to render the details of each pizza,
                 such as the name, ingredients, and price. */}
-                        {pizzaData.map((pizza) => (<Pizza pizzaObj={pizza} />))}
-                    </ul>
+                            {pizzaData.map((pizza) => (<Pizza pizzaObj={pizza} />))}
+                        </ul>
+                    </React.Fragment>
                 ) : (<p>Sorry, we're out of pizzas!</p>)
             }
 
